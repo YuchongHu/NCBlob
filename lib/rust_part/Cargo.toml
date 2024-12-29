@@ -1,0 +1,41 @@
+[package]
+name = "tbr_rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib", "staticlib"]
+
+[dependencies]
+memmap2 = { version = "0.9.4", optional = true }
+anyhow = "1.0.86"
+bincode = "1.3.3"
+dashmap = { version = "5.5.3", features = ["inline", "serde"] }
+hex = "0.4.3"
+itertools = "0.13.0"
+lru = "0.12.3"
+parking_lot = "0.12.3"
+rusqlite = { version = "0.31.0", features = [
+    "bundled",
+    "blob",
+], optional = true }
+thiserror = "1.0.61"
+cxx = { version = "1.0.124", features = ["c++14", "c++17"] }
+csv = "1.3.0"
+rand = "0.8.5"
+
+[build-dependencies]
+cxx-build = "1.0.124"
+
+[features]
+default = ["local_fs"]
+local_fs = []
+sqlite = ["rusqlite"]
+rusqlite = ["dep:rusqlite"]
+memmap = ["dep:memmap2"]
+
+
+[dev-dependencies]
+crossbeam-channel = "0.5.13"
+rand = "0.8.5"
+tempfile = "3.10.1"

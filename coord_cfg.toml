@@ -1,0 +1,139 @@
+# workspace of the coordinator
+workspace_name = "test"
+
+# ip of the coordinator
+ip = "192.168.0.186"
+
+# working directory of the coordinator for storing meta data
+# postfixed with the workspace name
+# working_dir = "./var/tmp/coord"
+working_dir = "/home/lokyin/tbr/var/disk/coord_meta"
+
+# erasure coding type: RS/NSYS/CLAY
+# ec_type = "RS"
+# ec_type = "NSYS"
+ec_type = "CLAY"
+
+# erasure coding parameters
+ec_k = 4
+ec_m = 2
+
+# number of the placement groups
+pg_num = 128
+
+# run the coordinator to perform the following action
+# "BuildData": build <test_load> stripes of data and store them in the data workers
+# "RepairChunk": repair a single chunk disk
+action = "BuildData"
+# action = "RepairFailureDomain"
+# action = "Read"
+# action = "DegradeRead"
+# action = "RepairChunk"
+
+# - baseline: do not merge the chunks, and use ec_type to encode
+# - partition: partition the chunks into large chunks and small chunks by partition_size, 
+#     encode the large chunks by CLAY, and encode the small chunks by RS
+# - intra locality: merge the chunks smaller than the merge_size with vertical blob layout,
+#     and encode the merged chunks by NSYS, and encode the chunks larger than the merge_size by CLAY
+# merge_scheme = "Baseline"
+merge_scheme = "Partition"
+# merge_scheme = "IntraLocality"
+# merge_scheme = "InterLocality"
+# merge_scheme = "ForDegradeRead"
+# merge_scheme = "IntraForDegradeRead"
+# merge_scheme = "InterForDegradeRead"
+
+# the size of a blob, only enables when merge_scheme is set to "InterForDegradeRead"
+blob_size = 4096 # 4KB
+
+# the size of the chunk
+chunk_size = 4_194_304 # 4MB
+
+# the size of the merge, equals to k * chunk_size
+merge_size = 4_194_304 # 4MB
+# merge_size = 2_097_152 # 2MB
+# merge_size = 1_048_576 # 1MB
+# merge_size = 524_288 # 512KB
+
+# the size of the partition, enabled when merge_scheme is set to "Partition"
+partition_size = 1_048_576 # 1MB
+
+# count test load by the number of stripes
+load_type = "ByStripe"
+# count test load by the size of the data (in GB)
+# load_type = "BySize"
+
+# load count for the test,
+# '0' stands for exhuasting all the data
+# for "ByStripe", it is the number of stripes
+# for "BySize", it is the size of the data in GB
+test_load = 64
+
+# stripe count number taht starts at, default to 0
+start_at = 0
+
+# path of the trace file
+trace = "./var/azure_trace.csv"
+
+# log file path
+log_file = "./var/log/coord"
+
+# ip for the data workers
+worker_ip = [
+    "192.168.0.186",
+    "192.168.0.187",
+    "192.168.0.188",
+    "192.168.0.190",
+    "192.168.0.191",
+    "192.168.0.189",
+    "192.168.0.194",
+    "192.168.0.195",
+    "192.168.0.193",
+    "192.168.0.196",
+    "192.168.0.197",
+    "192.168.0.198",
+    "192.168.0.199",
+    "192.168.0.200",
+    "192.168.0.205",
+    "192.168.0.206",
+    "192.168.0.204",
+    "192.168.0.202",
+    "192.168.0.201",
+    "192.168.0.203",
+]
+# disks id for each data worker
+# the size of this list should be equal to the size of worker_ips
+disk_list = [
+    # the first worker has 1 disks: #0
+    [0],
+    [1],
+    [2],
+    [3],
+    [4],
+    [5],
+    [6],
+    [7],
+    [8],
+    [9],
+    [10],
+    [11],
+    [12],
+    [13],
+    [14],
+    [15],
+    [16],
+    [17],
+    [18],
+    [19],
+]
+
+[repair_chunk]
+chunk_index = 0
+# repair the chunks by centralized or pipelined manner
+manner = "Centralized"
+# manner = "Pipelined"
+
+[repair_failure_domain]
+# the id of the failed disk
+# -1 stands for randomly select a failed disk
+failed_disk = 1

@@ -1,0 +1,20 @@
+workspace_name = "test"
+# directory where the worker will store its data
+# postfixed with the workspace name
+working_dir = "/data/disk3/worker"
+# create a new directory if the working directory does not exist
+# WARNING: this will remove all the data in the working directory
+create_new = false
+# the ip of the worker, default to 127.0.0.1
+ip = "127.0.0.1"
+# do the chunk work in a block unit
+do_block = true
+# size of the cache, in item
+cache_size = 65536
+# number of the worker threads, default to the number of the cores
+# and 0 stands for the default set
+num_threads = 0
+# the size of the large chunk, in bytes
+# if a chunk size is larger than this value, it will be considered as a large chunk
+# and it won't be cached
+large_chunk_size = 16_777_216 # 16MB

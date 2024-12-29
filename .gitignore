@@ -1,0 +1,9 @@
+.cache
+.vscode
+/cmake-build*
+/var
+/bin
+/build*/
+core.[0-9]*.coordinator.[0-9]*.coord
+*.log
+/log
